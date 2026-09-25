@@ -1,3 +1,76 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  /* Cores estruturais */
+  --color-fundo: var(--fundo);
+  --color-card: var(--card);
+  --color-borda: var(--borda);
+
+  /* Tipografia */
+  --color-texto: var(--texto);
+  --color-mutado: var(--mutado);
+
+  /* Identidade do sistema */
+  --color-primaria: var(--primaria);
+  --color-primaria-hover: var(--primaria-hover);
+  --color-secundaria: var(--secundaria);
+
+  /* Estados e feedback */
+  --color-sucesso: var(--sucesso);
+  --color-alerta: var(--alerta);
+  --color-erro: var(--erro);
+}
+
+:root {
+  /* ==========================================================================
+     MODO CLARO (Pastel)
+     - Fundo: off-white pastel lilás (nada de branco 100% puro)
+     - Texto: quase preto para contraste nítido e acessível
+     ========================================================================== */
+  --fundo: #f6f4f9;
+  --card: #ede8f5;
+  --borda: #dad2e6;
+
+  --texto: #121016;
+  --mutado: #6e667d;
+
+  --primaria: #9d7fe6;
+  --primaria-hover: #8865dd;
+  --secundaria: #8699d8;
+
+  --sucesso: #48bb78;
+  --alerta: #ed8936;
+  --erro: #e56b82;
+}
+
+.dark {
+  /* ==========================================================================
+     MODO ESCURO
+     - Fundo: quase preto com subtom roxo (nada de preto puro 100%)
+     - Texto: off-white pastel confortável
+     ========================================================================== */
+  --fundo: #121016;
+  --card: #1c1824;
+  --borda: #2d263b;
+
+  --texto: #f6f4f9;
+  --mutado: #9d95ad;
+
+  --primaria: #b296f5;
+  --primaria-hover: #c4adfc;
+  --secundaria: #9aa9e6;
+
+  --sucesso: #68d391;
+  --alerta: #f6ad55;
+  --erro: #fc819e;
+}
+
+body {
+  background-color: var(--fundo);
+  color: var(--texto);
+  font-family: inherit;
+  margin: 0;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
