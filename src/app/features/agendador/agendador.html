@@ -1,0 +1,76 @@
+<div data-testid="agendador-container" class="min-h-screen flex flex-col justify-between bg-fundo text-texto">
+  <main data-testid="area-conteudo-etapa" class="flex-1 min-h-0">
+    <router-outlet />
+  </main>
+
+  <footer
+    data-testid="barra-controle-stepper"
+    class="sticky bottom-0 z-30 w-full bg-fundo/95 backdrop-blur-md border-t border-borda py-3 sm:py-4 px-4 sm:px-8 lg:px-14 flex justify-center items-center"
+  >
+    <div data-testid="stepper-conteudo-alinhado" class="max-w-4xl w-full flex flex-col items-center gap-3">
+      <div data-testid="linha-topo-stepper" class="w-full flex items-center justify-between">
+        <div data-testid="area-botao-voltar" class="w-20 flex justify-start">
+          @if (podeVoltar()) {
+            <button
+              data-testid="botao-voltar-stepper"
+              type="button"
+              (click)="voltar()"
+              class="group inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold text-mutado hover:text-texto hover:bg-borda/40 transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaria cursor-pointer"
+              aria-label="Voltar para a etapa anterior"
+            >
+              <span
+                class="material-symbols-outlined text-[18px] transition-transform duration-200 group-hover:-translate-x-0.5 select-none leading-none"
+                aria-hidden="true"
+              >
+                arrow_back
+              </span>
+              <span>Voltar</span>
+            </button>
+          }
+        </div>
+
+        <div data-testid="indicador-progresso-stepper" class="flex flex-col items-center gap-1 shrink-0">
+          <div data-testid="barras-progresso-stepper" class="flex items-center gap-1.5" aria-hidden="true">
+            @for (step of steps(); track step.id; let i = $index) {
+              <div
+                [attr.data-testid]="'barra-passo-' + step.id"
+                class="h-1.5 rounded-full transition-all duration-300"
+                [class]="
+                  i === currentStepIndex()
+                    ? 'w-7 bg-primaria'
+                    : i < currentStepIndex()
+                      ? 'w-2.5 bg-sucesso'
+                      : 'w-2.5 bg-borda'
+                "
+              ></div>
+            }
+          </div>
+          <span data-testid="texto-progresso-stepper" class="text-xs font-medium text-mutado">
+            Passo {{ currentStepIndex() + 1 }} de {{ steps().length }} &bull;
+            <strong class="font-semibold text-texto">{{ currentStep().label }}</strong>
+          </span>
+        </div>
+
+        <div data-testid="espacador-alinhamento-stepper" class="w-20" aria-hidden="true"></div>
+      </div>
+
+      <div data-testid="area-botao-avancar" class="w-full">
+        <button
+          data-testid="botao-avancar-stepper"
+          type="button"
+          (click)="avancar()"
+          class="w-full group inline-flex items-center justify-center gap-2 px-6 py-3 sm:py-3.5 rounded-xl bg-primaria hover:bg-primaria-hover text-white font-semibold text-sm sm:text-base shadow-sm hover:shadow-md transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primaria whitespace-nowrap cursor-pointer"
+          [attr.aria-label]="currentStep().proximoLabel"
+        >
+          <span>{{ currentStep().proximoLabel }}</span>
+          <span
+            class="material-symbols-outlined text-lg sm:text-xl transition-transform duration-200 group-hover:translate-x-1 select-none leading-none"
+            aria-hidden="true"
+          >
+            arrow_forward
+          </span>
+        </button>
+      </div>
+    </div>
+  </footer>
+</div>
